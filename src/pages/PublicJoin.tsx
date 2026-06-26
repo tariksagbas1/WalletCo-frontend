@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { createPortal, flushSync } from "react-dom";
 import { useParams } from "react-router-dom";
 import { z } from "zod";
 import { Loader2, Stamp, CheckCircle2, ShieldCheck, Apple } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { absoluteAppUrl } from "@/lib/appUrl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,12 +88,19 @@ export default function PublicJoin() {
     })();
   }, [merchantSlug, programSlug]);
 
-  useEffect(() => {
-    if (!addingToWallet || !done) return;
+  const handleAddToWallet = () => {
+    if (!done || addingToWallet) return;
+    flushSync(() => {
+      setAddingToWallet(true);
+    });
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-    const downloadEndpoint = `${supabaseUrl}/functions/v1/pass-download?pass_id=${done.passId}&token=${done.authToken}`;
-    window.location.href = downloadEndpoint;
-  }, [addingToWallet, done]);
+    const downloadEndpoint =
+      done.downloadUrl ||
+      `${supabaseUrl}/functions/v1/pass-download?pass_id=${done.passId}&token=${done.authToken}`;
+    window.setTimeout(() => {
+      window.location.href = downloadEndpoint;
+    }, 150);
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,15 +165,17 @@ export default function PublicJoin() {
   if (done) {
     return (
       <div className="min-h-screen bg-background">
-        {addingToWallet && (
-          <div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
-            aria-busy="true"
-            aria-label="Kart hazırlanıyor"
-          >
-            <Loader2 className="h-8 w-8 animate-spin text-foreground" />
-          </div>
-        )}
+        {addingToWallet &&
+          createPortal(
+            <div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
+              aria-busy="true"
+              aria-label="Kart hazırlanıyor"
+            >
+              <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+            </div>,
+            document.body,
+          )}
 
         <div
           className="relative px-6 pb-12 pt-16 text-center"
@@ -188,7 +199,7 @@ export default function PublicJoin() {
 
             <button
               type="button"
-              onClick={() => setAddingToWallet(true)}
+              onClick={handleAddToWallet}
               disabled={addingToWallet}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-3 text-base font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-70"
             >
@@ -197,7 +208,7 @@ export default function PublicJoin() {
             </button>
 
             <a
-              href={`/pass/${done.passId}?token=${done.authToken}`}
+              href={absoluteAppUrl(`/pass/${done.passId}?token=${done.authToken}`)}
               className="mt-3 block text-center text-sm text-muted-foreground underline-offset-2 hover:underline"
             >
               Kartı bağlantıyla aç
