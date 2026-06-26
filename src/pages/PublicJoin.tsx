@@ -23,9 +23,9 @@ interface ProgramInfo {
 
 function MerchantLogo({ logoUrl, brand }: { logoUrl: string | null; brand: string }) {
   if (logoUrl) {
-    return <img src={logoUrl} alt="" className="mx-auto size-14 rounded-xl object-contain" />;
+    return <img src={logoUrl} alt="" className="mx-auto size-20 object-contain" />;
   }
-  return <Stamp className="mx-auto h-14 w-14" style={{ color: brand }} />;
+  return <Stamp className="mx-auto size-20" style={{ color: brand }} />;
 }
 
 const FormSchema = z.object({

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Coffee, QrCode, Smartphone, BarChart3, ArrowRight } from "lucide-react";
+import { QrCode, Smartphone, BarChart3, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
@@ -11,10 +11,12 @@ const Index = () => {
       <header className="border-b border-border/50">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Coffee className="h-4 w-4" />
-            </div>
-            <span className="font-semibold tracking-tight">Sadakat Cüzdanı</span>
+            <img
+              src={`${import.meta.env.BASE_URL}walletco-logo.png`}
+              alt="WalletCo"
+              className="h-8 w-8 rounded-md object-contain"
+            />
+            <span className="font-semibold tracking-tight">WalletCo</span>
           </div>
           <nav className="flex items-center gap-2">
             {user ? (
