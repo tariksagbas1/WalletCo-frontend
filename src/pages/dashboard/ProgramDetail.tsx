@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { FunnelChart } from "@/components/analytics/FunnelChart";
 import { generatePosterPdf } from "@/components/programs/PosterPdf";
+import { absoluteAppUrl } from "@/lib/appUrl";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface Program {
@@ -141,7 +142,7 @@ export default function ProgramDetail() {
   }
   if (!program) return <div className="p-12 text-center text-muted-foreground">Program bulunamadı.</div>;
 
-  const joinUrl = `${window.location.origin}/join/${program.merchants.slug}/${program.slug}`;
+  const joinUrl = absoluteAppUrl(`/join/${program.merchants.slug}/${program.slug}`);
   const rule = program.program_rules?.[0]?.rule_json ?? {};
 
   const downloadQR = () => {

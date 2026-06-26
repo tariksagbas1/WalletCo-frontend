@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "@/hooks/use-toast";
 import { Coffee, Loader2 } from "lucide-react";
 import { safeNext } from "@/lib/safeNext";
+import { absoluteAppUrl } from "@/lib/appUrl";
 
 const schema = z.object({
   email: z.string().trim().email("Geçerli bir e-posta girin").max(255),
@@ -51,7 +52,7 @@ export default function Auth() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}${nextPath}`,
+            emailRedirectTo: absoluteAppUrl(nextPath),
             data: { first_name: firstName },
           },
         });
