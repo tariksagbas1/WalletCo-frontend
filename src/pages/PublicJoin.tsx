@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal, flushSync } from "react-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { z } from "zod";
 import { Loader2, Stamp, CheckCircle2, ShieldCheck, Apple } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -298,8 +298,22 @@ export default function PublicJoin() {
               />
               <span className="text-xs leading-relaxed text-muted-foreground">
                 <ShieldCheck className="mr-1 inline h-3.5 w-3.5" />
-                KVKK aydınlatma metnini ve kullanım koşullarını okudum, sadakat programı için kişisel verilerimin
-                işlenmesine onay veriyorum.
+                <Link
+                  to="/privacy-policy"
+                  className="font-semibold underline underline-offset-2 hover:text-foreground"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  KVKK aydınlatma metnini
+                </Link>{" "}
+                ve{" "}
+                <Link
+                  to="/user-agreement"
+                  className="font-semibold underline underline-offset-2 hover:text-foreground"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  kullanım koşullarını
+                </Link>{" "}
+                okudum, sadakat programı için kişisel verilerimin işlenmesine onay veriyorum.
               </span>
             </label>
 
