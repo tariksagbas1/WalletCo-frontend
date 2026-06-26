@@ -7,6 +7,7 @@ interface MerchantContext {
   name: string;
   slug: string;
   default_locale: string;
+  logo_url: string | null;
 }
 
 type AppRole = "owner" | "admin" | "manager" | "staff" | "analyst" | "support";
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loadMerchantAndRoles = async (userId: string) => {
     const { data } = await supabase
       .from("user_roles")
-      .select("role, merchant_id, merchants:merchant_id(id,name,slug,default_locale)")
+      .select("role, merchant_id, merchants:merchant_id(id,name,slug,default_locale,logo_url)")
       .eq("user_id", userId);
     const rows = (data ?? []) as any[];
     if (rows.length === 0) {

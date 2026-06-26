@@ -171,6 +171,13 @@ export default function Settings() {
 
               <div className="space-y-2 pt-2">
                 <Label>Logo</Label>
+                {merchant?.logo_url && (
+                  <img
+                    src={merchant.logo_url}
+                    alt="İşletme logosu"
+                    className="h-20 w-20 object-contain"
+                  />
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -190,7 +197,7 @@ export default function Settings() {
                     ) : (
                       <Upload className="mr-2 h-4 w-4" />
                     )}
-                    Logo yükle
+                    {merchant?.logo_url ? "Yeni Logo Yükle" : "Logo Yükle"}
                   </Button>
                 </div>
               </div>
