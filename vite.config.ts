@@ -4,7 +4,11 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
+// GitHub project Pages are served from /repo-name/, not site root.
+const repoBase = process.env.GITHUB_PAGES === "true" ? "/WalletCo-frontend/" : "/";
+
 export default defineConfig(({ mode }) => ({
+  base: repoBase,
   server: {
     host: "::",
     port: 8080,

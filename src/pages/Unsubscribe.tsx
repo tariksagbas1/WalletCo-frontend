@@ -19,8 +19,8 @@ export default function Unsubscribe() {
       setState("invalid");
       return;
     }
-    const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/handle-email-unsubscribe?token=${encodeURIComponent(token)}`;
-    fetch(url, { headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY } })
+    const url = `${import.meta.env.SUPABASE_URL}/functions/v1/handle-email-unsubscribe?token=${encodeURIComponent(token)}`;
+    fetch(url, { headers: { apikey: import.meta.env.SUPABASE_ANON_KEY } })
       .then(async (r) => {
         const data = await r.json().catch(() => ({}));
         if (!r.ok) {
