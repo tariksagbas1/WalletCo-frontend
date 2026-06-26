@@ -99,7 +99,15 @@ const Index = () => {
       </section>
 
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Sadakat Cüzdanı — Türkiye'de tasarlandı
+        <div className="flex justify-center gap-4">
+          <Link to="/user-agreement" className="hover:text-foreground">
+            Kullanıcı Sözleşmesi
+          </Link>
+          <Link to="/privacy-policy" className="hover:text-foreground">
+            Gizlilik Politikası
+          </Link>
+        </div>
+        <p className="mt-4">© {new Date().getFullYear()} WalletCo — Türkiye&apos;de tasarlandı</p>
       </footer>
     </div>
   );
