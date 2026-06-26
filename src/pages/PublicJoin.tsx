@@ -170,9 +170,12 @@ export default function PublicJoin() {
             <div
               className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
               aria-busy="true"
-              aria-label="Kart hazırlanıyor"
+              aria-label="Kartınız hazırlanıyor"
             >
-              <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-base font-medium text-foreground">Kartınız hazırlanıyor</p>
+                <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+              </div>
             </div>,
             document.body,
           )}
