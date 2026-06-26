@@ -29,18 +29,11 @@ const FormSchema = z.object({
     .max(20)
     .regex(/^[+0-9\s()-]+$/, "Geçerli bir telefon girin"),
   email: z.string().trim().email("Geçerli bir e-posta girin").optional().or(z.literal("")),
-  birth_day: z.number().int().min(1).max(31).optional().nullable(),
-  birth_month: z.number().int().min(1).max(12).optional().nullable(),
   consent_kvkk: z.literal(true, {
     errorMap: () => ({ message: "Devam etmek için onay vermeniz gerekiyor" }),
   }),
   consent_marketing: z.boolean().optional(),
 });
-
-const MONTHS = [
-  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
-];
 
 export default function PublicJoin() {
   const { merchantSlug, programSlug } = useParams<{ merchantSlug: string; programSlug: string }>();
@@ -53,8 +46,6 @@ export default function PublicJoin() {
     last_name: "",
     phone: "",
     email: "",
-    birth_day: "",
-    birth_month: "",
     consent_kvkk: false,
     consent_marketing: false,
   });
@@ -96,11 +87,7 @@ export default function PublicJoin() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = {
-      ...form,
-      birth_day: form.birth_day ? Number(form.birth_day) : null,
-      birth_month: form.birth_month ? Number(form.birth_month) : null,
-    };
+    const payload = { ...form };
     const parsed = FormSchema.safeParse(payload);
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors)[0]?.[0];
@@ -117,8 +104,6 @@ export default function PublicJoin() {
           last_name: parsed.data.last_name || null,
           phone: parsed.data.phone,
           email: parsed.data.email || null,
-          birth_day: parsed.data.birth_day ?? null,
-          birth_month: parsed.data.birth_month ?? null,
           consent_kvkk: true,
           consent_marketing: !!parsed.data.consent_marketing,
         },
@@ -278,35 +263,6 @@ export default function PublicJoin() {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label>Doğum günü (opsiyonel)</Label>
-              <div className="grid grid-cols-2 gap-3">
-                <select
-                  aria-label="Gün"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={form.birth_day}
-                  onChange={(e) => setForm((f) => ({ ...f, birth_day: e.target.value }))}
-                >
-                  <option value="">Gün</option>
-                  {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Ay"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={form.birth_month}
-                  onChange={(e) => setForm((f) => ({ ...f, birth_month: e.target.value }))}
-                >
-                  <option value="">Ay</option>
-                  {MONTHS.map((m, i) => (
-                    <option key={m} value={i + 1}>{m}</option>
-                  ))}
-                </select>
-              </div>
-              <p className="text-[11px] text-muted-foreground">Doğum gününüzde size özel sürprizler için.</p>
-            </div>
-
             <label className="flex items-start gap-3 rounded-lg border border-border bg-muted/40 p-3">
               <Checkbox
                 checked={form.consent_kvkk}
@@ -320,6 +276,7 @@ export default function PublicJoin() {
               </span>
             </label>
 
+            {/* Marketing SMS opt-in — hidden for now
             <label className="flex items-start gap-3 px-1">
               <Checkbox
                 checked={form.consent_marketing}
@@ -330,6 +287,7 @@ export default function PublicJoin() {
                 Kampanya ve özel teklifler için SMS almak istiyorum (opsiyonel).
               </span>
             </label>
+            */}
 
             <Button type="submit" className="w-full" size="lg" disabled={submitting}>
               {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Sadakat kartımı oluştur"}
