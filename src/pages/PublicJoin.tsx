@@ -18,7 +18,14 @@ interface ProgramInfo {
   brand_primary_color: string | null;
   terms_text: string | null;
   rule: { threshold?: number; reward_label?: string };
-  merchant: { name: string; slug: string };
+  merchant: { name: string; slug: string; logo_url: string | null };
+}
+
+function MerchantLogo({ logoUrl, brand }: { logoUrl: string | null; brand: string }) {
+  if (logoUrl) {
+    return <img src={logoUrl} alt="" className="mx-auto size-14 rounded-xl object-contain" />;
+  }
+  return <Stamp className="mx-auto h-14 w-14" style={{ color: brand }} />;
 }
 
 const FormSchema = z.object({
@@ -30,7 +37,6 @@ const FormSchema = z.object({
     .min(7, "Geçerli bir telefon girin")
     .max(20)
     .regex(/^[+0-9\s()-]+$/, "Geçerli bir telefon girin"),
-  email: z.string().trim().email("Geçerli bir e-posta girin").optional().or(z.literal("")),
   consent_kvkk: z.literal(true, {
     errorMap: () => ({ message: "Devam etmek için onay vermeniz gerekiyor" }),
   }),
@@ -48,7 +54,6 @@ export default function PublicJoin() {
     first_name: "",
     last_name: "",
     phone: "",
-    email: "",
     consent_kvkk: false,
     consent_marketing: false,
   });
@@ -78,7 +83,11 @@ export default function PublicJoin() {
           brand_primary_color: data.program.brand_primary_color,
           terms_text: data.program.terms_text,
           rule: data.program.rule ?? {},
-          merchant: { name: data.merchant.name, slug: data.merchant.slug },
+          merchant: {
+            name: data.merchant.name,
+            slug: data.merchant.slug,
+            logo_url: data.merchant.logo_url ?? null,
+          },
         });
       } catch (err) {
         console.error("Failed to load program info:", err);
@@ -120,7 +129,7 @@ export default function PublicJoin() {
           first_name: parsed.data.first_name,
           last_name: parsed.data.last_name || null,
           phone: parsed.data.phone,
-          email: parsed.data.email || null,
+          email: null,
           consent_kvkk: true,
           consent_marketing: !!parsed.data.consent_marketing,
         },
@@ -229,9 +238,7 @@ export default function PublicJoin() {
   return (
     <div className="min-h-screen bg-background">
       <div className="px-6 pb-10 pt-16 text-center" style={{ background: `linear-gradient(180deg, ${brand}, transparent)` }}>
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/95 shadow-md">
-          <Stamp className="h-7 w-7" style={{ color: brand }} />
-        </div>
+        <MerchantLogo logoUrl={program.merchant.logo_url} brand={brand} />
         <h1 className="mt-5 text-2xl font-semibold text-white">{program.merchant.name}</h1>
         <p className="mt-1 text-sm text-white/85">{program.name}</p>
       </div>
@@ -280,18 +287,6 @@ export default function PublicJoin() {
                 onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                 required
                 maxLength={20}
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="email">E-posta (opsiyonel)</Label>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                maxLength={255}
               />
             </div>
 
