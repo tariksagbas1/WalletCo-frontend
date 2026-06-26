@@ -64,8 +64,8 @@ export default function PublicJoin() {
     if (!merchantSlug || !programSlug) return;
     (async () => {
       try {
-        const supabaseUrl = import.meta.env.SUPABASE_URL as string;
-        const anonKey = import.meta.env.SUPABASE_ANON_KEY as string;
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+        const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
         const res = await fetch(
           `${supabaseUrl}/functions/v1/public-program-info?merchant_slug=${encodeURIComponent(
             merchantSlug,
@@ -161,7 +161,7 @@ export default function PublicJoin() {
   const rewardLabel = program.rule.reward_label ?? "Ödül";
 
   if (done) {
-    const supabaseUrl = import.meta.env.SUPABASE_URL as string;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
     const downloadEndpoint = `${supabaseUrl}/functions/v1/pass-download?pass_id=${done.passId}&token=${done.authToken}`;
     return (
       <div className="min-h-screen bg-background">

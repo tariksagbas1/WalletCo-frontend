@@ -31,7 +31,7 @@ export default function PublicPassView() {
       return;
     }
     (async () => {
-      const supabaseUrl = import.meta.env.SUPABASE_URL as string;
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
       const infoRes = await fetch(
         `${supabaseUrl}/functions/v1/pass-info?pass_id=${passId}&token=${token}`,
       );
@@ -63,7 +63,7 @@ export default function PublicPassView() {
   }
 
   const brand = view.brand ?? "hsl(var(--primary))";
-  const supabaseUrl = import.meta.env.SUPABASE_URL as string;
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
   const downloadEndpoint = `${supabaseUrl}/functions/v1/pass-download?pass_id=${passId}&token=${token}`;
   const pct = Math.min(100, Math.round((view.stamps / Math.max(1, view.threshold)) * 100));
 

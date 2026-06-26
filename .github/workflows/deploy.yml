@@ -31,8 +31,8 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: SPA fallback for client-side routes
         run: cp dist/index.html dist/404.html
