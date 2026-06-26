@@ -40,6 +40,7 @@ export default function PublicJoin() {
   const [program, setProgram] = useState<ProgramInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [addingToWallet, setAddingToWallet] = useState(false);
   const [done, setDone] = useState<{ passId: string; downloadUrl: string; authToken: string } | null>(null);
   const [form, setForm] = useState({
     first_name: "",
@@ -84,6 +85,13 @@ export default function PublicJoin() {
       }
     })();
   }, [merchantSlug, programSlug]);
+
+  useEffect(() => {
+    if (!addingToWallet || !done) return;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+    const downloadEndpoint = `${supabaseUrl}/functions/v1/pass-download?pass_id=${done.passId}&token=${done.authToken}`;
+    window.location.href = downloadEndpoint;
+  }, [addingToWallet, done]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,10 +154,18 @@ export default function PublicJoin() {
   const rewardLabel = program.rule.reward_label ?? "Ödül";
 
   if (done) {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-    const downloadEndpoint = `${supabaseUrl}/functions/v1/pass-download?pass_id=${done.passId}&token=${done.authToken}`;
     return (
       <div className="min-h-screen bg-background">
+        {addingToWallet && (
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
+            aria-busy="true"
+            aria-label="Kart hazırlanıyor"
+          >
+            <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+          </div>
+        )}
+
         <div
           className="relative px-6 pb-12 pt-16 text-center"
           style={{ background: `linear-gradient(180deg, ${brand}, transparent)` }}
@@ -170,13 +186,15 @@ export default function PublicJoin() {
               <span className="font-medium">{rewardLabel}</span> kazan.
             </div>
 
-            <a
-              href={downloadEndpoint}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-3 text-base font-medium text-background transition-opacity hover:opacity-90"
+            <button
+              type="button"
+              onClick={() => setAddingToWallet(true)}
+              disabled={addingToWallet}
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-3 text-base font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-70"
             >
               <Apple className="h-5 w-5" />
               Apple Wallet'a Ekle
-            </a>
+            </button>
 
             <a
               href={`/pass/${done.passId}?token=${done.authToken}`}
