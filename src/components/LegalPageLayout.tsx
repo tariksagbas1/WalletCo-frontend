@@ -37,12 +37,15 @@ export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {
       </main>
 
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           <Link to="/user-agreement" className="hover:text-foreground">
             Kullanıcı Sözleşmesi
           </Link>
           <Link to="/privacy-policy" className="hover:text-foreground">
             Gizlilik Politikası
+          </Link>
+          <Link to="/support" className="hover:text-foreground">
+            Destek
           </Link>
         </div>
         <p className="mt-4">© {new Date().getFullYear()} WalletCo</p>
