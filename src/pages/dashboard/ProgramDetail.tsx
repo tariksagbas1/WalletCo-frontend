@@ -155,8 +155,30 @@ export default function ProgramDetail() {
   };
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(joinUrl);
-    toast({ title: "Link kopyalandı" });
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(joinUrl);
+      } else {
+        throw new Error("Clipboard API unavailable");
+      }
+      toast({ title: "Link kopyalandı" });
+    } catch {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = joinUrl;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (!ok) throw new Error("execCommand failed");
+        toast({ title: "Link kopyalandı" });
+      } catch {
+        toast({ title: "Link kopyalanamadı", variant: "destructive" });
+      }
+    }
   };
 
   const downloadPoster = () => {
@@ -333,8 +355,10 @@ export default function ProgramDetail() {
                 <div className="space-y-1">
                   <div className="text-xs font-medium text-muted-foreground">Katılım linki</div>
                   <button
+                    type="button"
                     onClick={copyLink}
                     className="flex w-full items-start gap-2 rounded-md border border-border bg-muted/50 p-2 text-left text-xs hover:bg-muted"
+                    aria-label="Katılım linkini kopyala"
                   >
                     <span className="flex-1 break-all">{joinUrl}</span>
                     <Copy className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
