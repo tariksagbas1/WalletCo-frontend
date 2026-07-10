@@ -256,7 +256,7 @@ export default function PublicJoin() {
             <div
               className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm"
               aria-busy={addingToWallet}
-              aria-label={addingToWallet ? "Kartınız ekleniyor..." : "Kart cüzdanınıza eklendi"}
+              aria-label={addingToWallet ? "Kartınız ekleniyor..." : "Kart cüzdanınıza eklendi."}
             >
               <div className="flex max-w-xs flex-col items-center gap-4 px-6 text-center">
                 {addingToWallet ? (
