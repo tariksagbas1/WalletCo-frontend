@@ -268,7 +268,7 @@ export default function PublicJoin() {
                   <>
                     <CheckCircle2 className="h-10 w-10 text-success" />
                     <p className="text-base font-medium text-foreground">
-                      Kartınızı cüzdanınızdan görüntüleyebilirsiniz
+                      Kartınızı Apple Wallet'tan görüntüleyebilirsiniz
                     </p>
                     <Button
                       variant="secondary"

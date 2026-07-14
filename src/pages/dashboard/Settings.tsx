@@ -50,6 +50,16 @@ export default function Settings() {
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !merchant) return;
+    const maxBytes = 1 * 1024 * 1024; // 1 MB
+    if (file.size > maxBytes) {
+      toast({
+        title: "Dosya çok büyük",
+        description: "Logo en fazla 1 MB olabilir.",
+        variant: "destructive",
+      });
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
     setUploadingLogo(true);
     try {
       const ext = file.name.split(".").pop()?.toLowerCase() || "png";
