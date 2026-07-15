@@ -58,12 +58,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const loadPlatformAdmin = async (userId: string) => {
-    const { data } = await supabase
-      .from("platform_admins")
-      .select("user_id")
+    const { data: platformAdmin } = await supabase
+      .from("platform_roles")
+      .select("role")
       .eq("user_id", userId)
+      .eq("role", "admin")
       .maybeSingle();
-    setIsPlatformAdmin(!!data);
+    setIsPlatformAdmin(!!platformAdmin);
   };
 
   useEffect(() => {
