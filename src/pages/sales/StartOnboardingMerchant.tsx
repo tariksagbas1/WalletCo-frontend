@@ -10,6 +10,8 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Plus, Trash2, Upload, Store, Users, Stamp } from "lucide-react";
+import walletcoLogo from "@/assets/walletco-logo.png";
+import walletcoQr from "@/assets/walletco-qr.png";
 
 const MAX_LOGO_BYTES = 1 * 1024 * 1024; // 1 MB
 
@@ -52,6 +54,60 @@ function fileToBase64(file: File): Promise<string> {
   });
 }
 
+function WalletPreview({
+  logoSrc,
+  businessName,
+  primary,
+  secondary,
+  threshold,
+  qrSrc,
+}: {
+  logoSrc: string;
+  businessName: string;
+  primary: string;
+  secondary: string;
+  threshold: number;
+  qrSrc: string;
+}) {
+  return (
+    <div
+      className="mx-auto flex aspect-[3/4] w-full max-w-[320px] flex-col rounded-3xl p-5 shadow-lg"
+      style={{ backgroundColor: primary }}
+    >
+      <div className="flex items-center gap-3">
+        <div className="h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-white/95">
+          <img src={logoSrc} alt="" className="h-full w-full object-contain" />
+        </div>
+        <div className="min-w-0 truncate text-base font-semibold text-white">{businessName}</div>
+      </div>
+
+      {/* Reserved empty space for the loyalty strip image (rendered later). */}
+      <div className="flex-1" />
+
+      <div className="flex items-end justify-between">
+        <div className="min-w-0">
+          <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: secondary }}>
+            Üye
+          </div>
+          <div className="mt-1 truncate text-base font-semibold text-white">İsim Soyisim</div>
+        </div>
+        <div className="shrink-0 text-right">
+          <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: secondary }}>
+            Damga
+          </div>
+          <div className="mt-1 text-base font-semibold text-white">0/{threshold}</div>
+        </div>
+      </div>
+
+      <div className="mt-6 flex justify-center">
+        <div className="rounded-lg bg-white p-1.5">
+          <img src={qrSrc} alt="QR" className="h-32 w-32" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function StartOnboardingMerchant() {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -73,13 +129,13 @@ export default function StartOnboardingMerchant() {
     name: "",
     description: "",
     terms_text: "",
-    threshold: 5,
-    reward_label: "Bedava Kahve",
+    threshold: 10,
+    reward_label: "İkram Kahve",
     reset_after_redeem: true,
     max_stamps_per_day: 3,
     cooldown_minutes: 30,
-    primary: "#566c86",
-    secondary: "#7f8b55",
+    primary: "#3b2415",
+    secondary: "#d6803a",
   });
 
   const [loading, setLoading] = useState(false);
@@ -340,12 +396,28 @@ export default function StartOnboardingMerchant() {
         </CardContent>
       </Card>
 
-      <div className="flex justify-end">
-        <Button type="submit" disabled={loading}>
+      {/* Cüzdan önizlemesi */}
+      <div>
+        <div className="mb-2 text-center text-sm font-medium text-muted-foreground">Cüzdan önizlemesi</div>
+        <WalletPreview
+          logoSrc={logoPreview || walletcoLogo}
+          businessName={name || "İşletme Adı"}
+          primary={program.primary}
+          secondary={program.secondary}
+          threshold={program.threshold}
+          qrSrc={walletcoQr}
+        />
+      </div>
+
+      <div className="mt-4 flex justify-center">
+        <Button type="submit" size="lg" disabled={loading} className="px-10 text-base">
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           İşletmeyi Oluştur
         </Button>
       </div>
+
+      {/* Extra scroll space below the submit button. */}
+      <div className="h-40" />
     </form>
   );
 }
