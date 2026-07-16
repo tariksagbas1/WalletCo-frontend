@@ -200,6 +200,12 @@ export default function StartOnboardingMerchant() {
     }
   };
 
+  const onManualThresholdChange = (raw: string) => {
+    setSpecialProgramId("none");
+    setStripUrl(null);
+    setProgram((prev) => ({ ...prev, threshold: parseInt(raw) || 0 }));
+  };
+
   const onPickLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -420,7 +426,7 @@ export default function StartOnboardingMerchant() {
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="space-y-1.5">
               <Label>Damga eşiği *</Label>
-              <Input type="number" min={2} max={50} value={program.threshold} onChange={(e) => setProgram({ ...program, threshold: parseInt(e.target.value) || 0 })} />
+              <Input type="number" min={2} max={50} value={program.threshold} onChange={(e) => onManualThresholdChange(e.target.value)} />
             </div>
             <div className="space-y-1.5">
               <Label>Günlük max damga</Label>
