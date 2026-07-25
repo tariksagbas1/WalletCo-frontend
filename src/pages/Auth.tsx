@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Coffee, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { safeNext } from "@/lib/safeNext";
 import { absoluteAppUrl } from "@/lib/appUrl";
 
@@ -104,12 +104,26 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--gradient-warm)] p-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-[var(--gradient-warm)] p-4">
+      <Button
+        variant="ghost"
+        size="sm"
+        className="absolute left-4 top-4 gap-1.5 text-muted-foreground hover:text-foreground"
+        asChild
+      >
+        <Link to="/">
+          <ArrowLeft className="h-4 w-4" />
+          Ana sayfaya dön
+        </Link>
+      </Button>
+
       <div className="w-full max-w-md">
-        <Link to="/" className="mb-8 flex items-center justify-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <Coffee className="h-5 w-5" />
-          </div>
+        <Link to="/" className="mb-8 flex items-center justify-center gap-2.5">
+          <img
+            src={`${import.meta.env.BASE_URL}walletco-logo.png`}
+            alt="WalletCo"
+            className="h-9 w-9 rounded-lg object-contain"
+          />
           <span className="text-lg font-semibold tracking-tight">WalletCo</span>
         </Link>
 

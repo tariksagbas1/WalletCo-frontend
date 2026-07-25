@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Teklif from "./pages/Teklif";
 import Onboarding from "./pages/Onboarding";
 import Overview from "./pages/dashboard/Overview";
 import Programs from "./pages/dashboard/Programs";
@@ -56,6 +57,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/teklif" element={<Teklif />} />
             <Route path="/join/:merchantSlug/:programSlug" element={<PublicJoin />} />
             <Route path="/pass/:passId" element={<PublicPassView />} />
             <Route path="/invite/accept" element={<InviteAccept />} />

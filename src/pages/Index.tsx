@@ -102,7 +102,7 @@ const Index = () => {
                   <Link to="/auth">Giriş Yap</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/auth?mode=signup">Hemen Başla</Link>
+                  <Link to="/teklif">Teklif Al</Link>
                 </Button>
               </>
             )}
@@ -133,7 +133,7 @@ const Index = () => {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button size="lg" className="h-12 rounded-xl px-6 text-base shadow-lg shadow-primary/15" asChild>
-                  <Link to="/auth?mode=signup">
+                  <Link to="/teklif">
                     Sadakat Kartını Oluştur <ArrowRight className="ml-1" />
                   </Link>
                 </Button>
@@ -418,8 +418,8 @@ const Index = () => {
                   Uygulamasız, masrafsız ve işletmenize özel dijital sadakat sisteminizi bugün oluşturun.
                 </p>
                 <Button size="lg" className="mt-8 h-12 rounded-xl px-7 text-base" asChild>
-                  <Link to="/auth?mode=signup">
-                    Hemen Başla <ArrowRight className="ml-1" />
+                  <Link to="/teklif">
+                    Bizimle İletişime Geç <ArrowRight className="ml-1" />
                   </Link>
                 </Button>
               </div>

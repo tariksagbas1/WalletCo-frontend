@@ -430,6 +430,36 @@ export type Database = {
         }
         Relationships: []
       }
+      leads: {
+        Row: {
+          branch_count: string | null
+          business_name: string
+          contact_name: string
+          email: string
+          id: string
+          note: string | null
+          phone_number: string
+        }
+        Insert: {
+          branch_count?: string | null
+          business_name: string
+          contact_name: string
+          email: string
+          id?: string
+          note?: string | null
+          phone_number: string
+        }
+        Update: {
+          branch_count?: string | null
+          business_name?: string
+          contact_name?: string
+          email?: string
+          id?: string
+          note?: string | null
+          phone_number?: string
+        }
+        Relationships: []
+      }
       locations: {
         Row: {
           address_line1: string | null
