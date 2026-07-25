@@ -14,11 +14,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import almostFullCard from "@/assets/Almost_Full_Card.png";
-import step1 from "@/assets/Step1.png";
-import step2 from "@/assets/Step2.png";
-import step3 from "@/assets/Step3.png";
-import walletDesign from "@/assets/how-it-works/wallet-design.png";
-import qrPosterDesign from "@/assets/how-it-works/qr-poster-design.png";
 import customerScansSignupQr from "@/assets/how-it-works/customer-scans-signup-qr.png";
 import signupForms from "@/assets/how-it-works/signup-forms.png";
 import addToWallet from "@/assets/how-it-works/add-to-wallet.png";
@@ -27,6 +22,7 @@ import staffStampingAction from "@/assets/how-it-works/staff-stamping-action.png
 import staffScansCustomersFullCard from "@/assets/how-it-works/staff-scans-customers-full-card.png";
 import staffRedeemsPrize from "@/assets/how-it-works/staff-redeems-prize.png";
 import giftCoffee from "@/assets/how-it-works/gift-coffee.png";
+import WalletSetupDiagram from "@/components/WalletSetupDiagram";
 
 const features = [
   {
@@ -193,112 +189,70 @@ const Index = () => {
                 Kart tamamlandığında ödülünü kullanır.
               </p>
             </div>
-
-            <figure
-              className="mx-auto mt-8 grid max-w-6xl grid-cols-3 items-stretch gap-2 sm:gap-3"
-              aria-label="WalletCo kullanım adımları"
-            >
-              <img
-                src={step1}
-                alt="1. adım: Kayıt ol ve sadakat kartını Apple Wallet'a ekle"
-                className="h-full w-full object-contain"
-                loading="lazy"
-              />
-              <img
-                src={step2}
-                alt="2. adım: QR kodu okutarak damga topla"
-                className="h-full w-full object-contain"
-                loading="lazy"
-              />
-              <img
-                src={step3}
-                alt="3. adım: Kart tamamlandığında ödülünü al"
-                className="h-full w-full object-contain"
-                loading="lazy"
-              />
-            </figure>
           </div>
         </section>
 
         <section className="bg-white pb-20 pt-10 sm:pb-24 sm:pt-12">
           <div className="container mx-auto max-w-6xl px-4 lg:px-8">
-            <h2 className="text-center text-3xl font-semibold sm:text-4xl">Kurulum</h2>
+            <h2 className="text-center text-3xl font-semibold sm:text-4xl">İlk Kurulum</h2>
 
-            <div className="mt-8 grid grid-cols-[1.35fr_0.65fr] items-end gap-3 sm:gap-8">
-              <figure className="overflow-hidden" >
-                <img
-                  src={walletDesign}
-                  alt="İşletmeye özel dijital sadakat kartının hazırlanması"
-                  style={{ border: "1px solid #e0e0e0", transform: "scale(1.20)" }}
-                  className="mx-auto max-h-[680px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mx-auto mt-3 max-w-xl text-center text-sm leading-6 text-muted-foreground">
-                  İstediğiniz kampanya belirlenir (örn. 10 kahveye 1 kahve) ve dijital kartınız hazırlanır.
-                </figcaption>
-              </figure>
-              <figure>
-                <img
-                  src={qrPosterDesign}
-                  alt="İşletmeye özel QR posterinin hazırlanması ve yerleştirilmesi"
-                  className="mx-auto max-h-[500px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                  İşletmenize özel QR posteri yerleştirilir.
-                </figcaption>
-              </figure>
+            <div className="mt-8">
+              <WalletSetupDiagram />
             </div>
 
-            <h2 className="mt-20 text-center text-3xl font-semibold sm:mt-24 sm:text-4xl">Kullanım</h2>
+            <h2 className="mt-20 text-center text-3xl font-semibold sm:mt-24 sm:text-4xl">Kayıt Oluşturma</h2>
 
-            <p className="mt-10 text-center text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              İlk Kayıt
-            </p>
+            <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-2 sm:px-4">
+              <div className="grid grid-cols-4 items-start gap-1 sm:gap-3">
+                <figure className="-ml-4 sm:-ml-8">
+                  <img
+                    src={customerScansSignupQr}
+                    alt="İlk kez gelen müşterinin QR posteri okutması"
+                    className="mx-auto max-h-[480px] w-full object-contain object-left"
+                    loading="lazy"
+                    style={{ marginLeft: "50px" }}
+                  />
+                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
+                    Kayıt yapmak isteyen müşteri, QR posteri okutur.
+                  </figcaption>
+                </figure>
 
-            <div className="mt-6 grid grid-cols-2 items-start gap-3 sm:gap-8">
-              <figure>
-                <img
-                  src={customerScansSignupQr}
-                  alt="İlk kez gelen müşterinin QR posteri okutması"
-                  className="mx-auto max-h-[520px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                  Kayıt yapmak isteyen müşteri, QR posteri okutur.
-                </figcaption>
-              </figure>
+                <figure>
+                  <img
+                    src={signupForms}
+                    alt="Müşterinin kayıt formunu doldurması ve KVKK metnini onaylaması"
+                    className="mx-auto max-h-[480px] w-full object-contain"
+                    loading="lazy"
+                    style={{ marginLeft: "50px" }}
+                  />
+                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground"
+                  style={{ marginLeft: "10px" }}
+                  >
+                    İsim, soyisim ve telefon numarasını girererek kartını oluşturur.
+                  </figcaption>
+                </figure>
 
-              <figure>
-                <img
-                  src={signupForms}
-                  alt="Müşterinin kayıt formunu doldurması ve KVKK metnini onaylaması"
-                  className="mx-auto max-h-[520px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                  İsim, soyisim ve telefon numarasını girererek kartını oluşturur.
-                </figcaption>
-              </figure>
+                <figure className="col-span-2">
+                  <img
+                    src={addToWallet}
+                    alt="Müşterinin oluşturulan kartı Apple Wallet'a eklemesi"
+                    className="mx-auto max-h-[480px] w-full object-contain"
+                    loading="lazy"
+                    style={{ marginLeft: "50px" }}
+                  />
+                  <figcaption
+                    className="mt-3 text-center text-sm leading-6 text-muted-foreground"
+                    style={{ marginLeft: "50px" }}
+                  >
+                    Müşteri oluşan kartını Apple Wallet&apos;a ekler.
+                  </figcaption>
+                </figure>
+              </div>
             </div>
 
-            <figure className="mx-auto mt-12 max-w-3xl">
-              <img
-                src={addToWallet}
-                alt="Müşterinin oluşturulan kartı Apple Wallet'a eklemesi"
-                className="mx-auto max-h-[700px] w-full object-contain"
-                loading="lazy"
-              />
-              <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                Müşteri oluşan kartını Apple Wallet&apos;a ekler.
-              </figcaption>
-            </figure>
+            <h2 className="mt-20 text-center text-3xl font-semibold sm:mt-24 sm:text-4xl">Damga Toplama</h2>
 
-            <p className="mt-16 text-center text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Damga Toplama
-            </p>
-
-            <div className="mt-6 grid grid-cols-2 items-start gap-3 sm:gap-8">
+            <div className="mt-8 grid grid-cols-2 items-start gap-3 sm:gap-8">
               <figure>
                 <img
                   src={staffScansCustomersQr}
@@ -323,46 +277,46 @@ const Index = () => {
               </figure>
             </div>
 
-            <p className="mt-16 text-center text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Ödül Kullanma
-            </p>
+            <h2 className="mt-20 text-center text-3xl font-semibold sm:mt-24 sm:text-4xl">Ödül Kullanma</h2>
 
-            <div className="mt-6 grid grid-cols-2 items-start gap-3 sm:gap-8">
-              <figure>
-                <img
-                  src={staffScansCustomersFullCard}
-                  alt="Personelin damgaları dolu müşteri kartını okutması"
-                  className="mx-auto max-h-[680px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                  Kartını dolduran müşteri QR kodunu yeniden personele gösterir. Personel kodu telefonuyla okutur.
-                </figcaption>
-              </figure>
-              <figure>
-                <img
-                  src={staffRedeemsPrize}
-                  alt="Personelin müşterinin ödülünü kullanması"
-                  className="mx-auto max-h-[680px] w-full object-contain"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                  Personel “Ödülü Kullan” tuşuna basar. Ödül kullanılır ve kartın damgaları sıfırlanır.
-                </figcaption>
-              </figure>
+            <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-4 sm:px-8">
+              <div className="mx-auto grid max-w-7xl grid-cols-3 items-start gap-3 sm:gap-6">
+                <figure>
+                  <img
+                    src={staffScansCustomersFullCard}
+                    alt="Personelin damgaları dolu müşteri kartını okutması"
+                    className="mx-auto max-h-[720px] w-full object-contain"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
+                    Kartını dolduran müşteri QR kodunu yeniden personele gösterir. Personel kodu telefonuyla okutur.
+                  </figcaption>
+                </figure>
+                <figure>
+                  <img
+                    src={staffRedeemsPrize}
+                    alt="Personelin müşterinin ödülünü kullanması"
+                    className="mx-auto max-h-[720px] w-full object-contain"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
+                    Personel “Ödülü Kullan” tuşuna basar. Ödül kullanılır ve kartın damgaları sıfırlanır.
+                  </figcaption>
+                </figure>
+                <figure>
+                  <img
+                    src={giftCoffee}
+                    alt="Personelin müşteriye ödülünü vermesi"
+                    className="mx-auto max-h-[720px] w-full object-contain"
+                    loading="lazy"
+                    style={{ transform: "scale(0.6)" }}
+                  />
+                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
+                    Personel müşteriye ödülünü verir.
+                  </figcaption>
+                </figure>
+              </div>
             </div>
-
-            <figure className="mx-auto mt-12 max-w-2xl">
-              <img
-                src={giftCoffee}
-                alt="Personelin müşteriye ödülünü vermesi"
-                className="mx-auto max-h-[560px] w-full object-contain"
-                loading="lazy"
-              />
-              <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                Personel müşteriye ödülünü verir.
-              </figcaption>
-            </figure>
           </div>
         </section>
 
