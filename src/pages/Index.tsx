@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import type { MouseEvent } from "react";
 import {
   ArrowRight,
   BarChart3,
@@ -23,6 +24,11 @@ import staffScansCustomersFullCard from "@/assets/how-it-works/staff-scans-custo
 import staffRedeemsPrize from "@/assets/how-it-works/staff-redeems-prize.png";
 import giftCoffee from "@/assets/how-it-works/gift-coffee.png";
 import WalletSetupDiagram from "@/components/WalletSetupDiagram";
+
+const scrollToSection = (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+  event.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+};
 
 const features = [
   {
@@ -80,13 +86,25 @@ const Index = () => {
           </Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Ana menü">
-            <a href="#nasil-calisir" className="text-muted-foreground transition-colors hover:text-foreground">
+            <a
+              href="#nasil-calisir"
+              onClick={scrollToSection("nasil-calisir")}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
               Nasıl Çalışır?
             </a>
-            <a href="#ozellikler" className="text-muted-foreground transition-colors hover:text-foreground">
+            <a
+              href="#ozellikler"
+              onClick={scrollToSection("ozellikler")}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
               Özellikler
             </a>
-            <a href="#tasarim" className="text-muted-foreground transition-colors hover:text-foreground">
+            <a
+              href="#tasarim"
+              onClick={scrollToSection("tasarim")}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
               Size Özel
             </a>
           </nav>
@@ -138,7 +156,9 @@ const Index = () => {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="h-12 rounded-xl bg-white/60 px-6 text-base" asChild>
-                  <a href="#nasil-calisir">Nasıl çalıştığını gör</a>
+                  <a href="#nasil-calisir" onClick={scrollToSection("nasil-calisir")}>
+                    Nasıl çalıştığını gör
+                  </a>
                 </Button>
               </div>
 
