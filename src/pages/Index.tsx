@@ -222,51 +222,43 @@ const Index = () => {
 
             <h2 className="mt-20 text-center text-3xl font-semibold sm:mt-24 sm:text-4xl">Kayıt Oluşturma</h2>
 
-            <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-2 sm:px-4">
-              <div className="grid grid-cols-4 items-start gap-1 sm:gap-3">
-                <figure className="-ml-4 sm:-ml-8">
+            <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 px-1 sm:px-4">
+              <div className="grid grid-cols-4 grid-rows-[auto_auto] gap-x-0.5 gap-y-1.5 sm:gap-x-3 sm:gap-y-3">
+                <div className="flex h-[140px] items-end justify-center sm:-ml-8 sm:h-[420px]">
                   <img
                     src={customerScansSignupQr}
                     alt="İlk kez gelen müşterinin QR posteri okutması"
-                    className="mx-auto max-h-[480px] w-full object-contain object-left"
+                    className="max-h-full max-w-full object-contain object-left sm:ml-[50px]"
                     loading="lazy"
-                    style={{ marginLeft: "50px" }}
                   />
-                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground">
-                    Kayıt yapmak isteyen müşteri, QR posteri okutur.
-                  </figcaption>
-                </figure>
-
-                <figure>
+                </div>
+                <div className="flex h-[140px] items-end justify-center sm:h-[420px]">
                   <img
                     src={signupForms}
                     alt="Müşterinin kayıt formunu doldurması ve KVKK metnini onaylaması"
-                    className="mx-auto max-h-[480px] w-full object-contain"
+                    className="ml-10 max-h-full max-w-full object-contain sm:ml-[50px]"
                     loading="lazy"
-                    style={{ marginLeft: "50px" }}
                   />
-                  <figcaption className="mt-3 text-center text-sm leading-6 text-muted-foreground"
-                  style={{ marginLeft: "10px" }}
-                  >
-                    İsim, soyisim ve telefon numarasını girererek kartını oluşturur.
-                  </figcaption>
-                </figure>
-
-                <figure className="col-span-2">
+                </div>
+                <div className="col-span-2 flex h-[140px] items-end justify-center sm:h-[420px]">
                   <img
                     src={addToWallet}
                     alt="Müşterinin oluşturulan kartı Apple Wallet'a eklemesi"
-                    className="mx-auto max-h-[480px] w-full object-contain"
+                    className="max-h-full max-w-full object-contain sm:ml-[50px]"
                     loading="lazy"
-                    style={{ marginLeft: "50px" }}
                   />
-                  <figcaption
-                    className="mt-3 text-center text-sm leading-6 text-muted-foreground"
-                    style={{ marginLeft: "50px" }}
-                  >
-                    Müşteri oluşan kartını Apple Wallet&apos;a ekler.
-                  </figcaption>
-                </figure>
+                </div>
+
+                <figcaption className="flex min-h-[3.75rem] items-start justify-center text-center text-xs leading-4 text-muted-foreground sm:min-h-[4.5rem] sm:text-sm sm:leading-6">
+                  Kayıt yapmak isteyen müşteri, QR posteri okutur.
+                </figcaption>
+                <figcaption className="ml-[15px] flex min-h-[3.75rem] items-start justify-center text-center text-xs leading-4 text-muted-foreground sm:ml-[10px] sm:min-h-[4.5rem] sm:text-sm sm:leading-6">
+                  <span className="sm:hidden">Alanları doldurur ve kartını oluşturur</span>
+                  <span className="hidden sm:inline">İsim, soyisim ve telefon numarasını girererek kartını oluşturur.</span>
+                </figcaption>
+                <figcaption className="col-span-2 flex min-h-[3.75rem] items-start justify-center text-center text-xs leading-4 text-muted-foreground sm:min-h-[4.5rem] sm:text-sm sm:leading-6 sm:ml-[50px]">
+                  Müşteri oluşan kartını Apple Wallet&apos;a ekler.
+                </figcaption>
               </div>
             </div>
 
