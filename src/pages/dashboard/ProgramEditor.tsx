@@ -57,8 +57,6 @@ export default function ProgramEditor() {
     threshold: 5,
     reward_label: "Bedava Kahve",
     reset_after_redeem: true,
-    max_stamps_per_day: 3,
-    cooldown_minutes: 30,
     primary: "#3b2415",
     secondary: "#d6803a",
   });
@@ -88,8 +86,6 @@ export default function ProgramEditor() {
             threshold: rule.threshold ?? 5,
             reward_label: rule.reward_label ?? "Bedava Kahve",
             reset_after_redeem: rule.reset_after_redeem ?? true,
-            max_stamps_per_day: rule.max_stamps_per_day ?? 3,
-            cooldown_minutes: rule.cooldown_minutes ?? 30,
             primary: prog.brand_primary_color ?? "#3b2415",
             secondary: prog.brand_secondary_color ?? "#d6803a",
           });
@@ -141,8 +137,8 @@ export default function ProgramEditor() {
         threshold: form.threshold,
         reward_label: form.reward_label,
         reset_after_redeem: form.reset_after_redeem,
-        max_stamps_per_day: form.max_stamps_per_day,
-        cooldown_minutes: form.cooldown_minutes,
+        max_stamps_per_day: 1000,
+        cooldown_minutes: 0,
       };
 
       // Upsert rule
@@ -258,13 +254,17 @@ export default function ProgramEditor() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Damga eşiği *</Label>
-                <Input
-                  type="number"
-                  min={2}
-                  max={50}
-                  value={form.threshold}
-                  onChange={(e) => setForm({ ...form, threshold: parseInt(e.target.value) || 0 })}
-                />
+                {isNew ? (
+                  <Input
+                    type="number"
+                    min={2}
+                    max={50}
+                    value={form.threshold}
+                    onChange={(e) => setForm({ ...form, threshold: parseInt(e.target.value) || 0 })}
+                  />
+                ) : (
+                  <p className="flex h-10 items-center text-sm font-medium">{form.threshold}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>Ödül başlığı *</Label>
@@ -272,28 +272,6 @@ export default function ProgramEditor() {
                   value={form.reward_label}
                   onChange={(e) => setForm({ ...form, reward_label: e.target.value })}
                   placeholder="Bedava Kahve"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Günlük max damga</Label>
-                <Input
-                  type="number"
-                  min={1}
-                  max={20}
-                  value={form.max_stamps_per_day}
-                  onChange={(e) => setForm({ ...form, max_stamps_per_day: parseInt(e.target.value) || 1 })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Bekleme süresi (dk)</Label>
-                <Input
-                  type="number"
-                  min={0}
-                  max={1440}
-                  value={form.cooldown_minutes}
-                  onChange={(e) => setForm({ ...form, cooldown_minutes: parseInt(e.target.value) || 0 })}
                 />
               </div>
             </div>

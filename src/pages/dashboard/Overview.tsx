@@ -213,14 +213,14 @@ export default function Overview() {
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <KpiCard
-              label="Toplam üye"
+              label="Toplam Üye Müşteri"
               value={totalMembers.toLocaleString("tr-TR")}
               icon={Users}
               delta={pctDelta(membersThisPeriod, membersPrevPeriod)}
               hint={`+${membersThisPeriod} son ${periodLabel}`}
             />
             <KpiCard
-              label="Aktif üye (30g)"
+              label="Aktif Müşteri (son 30 gün)"
               value={activeMemberIds.size.toLocaleString("tr-TR")}
               icon={TrendingUp}
               hint={`${totalMembers > 0 ? Math.round((activeMemberIds.size / totalMembers) * 100) : 0}% / toplam`}

@@ -20,13 +20,11 @@ import {
   LayoutDashboard,
   Stamp,
   Users,
-  Store,
   UserCog,
   Settings,
   Coffee,
   LogOut,
   Loader2,
-  ScrollText,
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,9 +34,7 @@ const items = [
   { title: "Müşteri İçgörüleri", url: "/dashboard/insights", icon: Sparkles },
   { title: "Programlar", url: "/dashboard/programs", icon: Stamp },
   { title: "Üyeler", url: "/dashboard/members", icon: Users },
-  { title: "Şubeler", url: "/dashboard/locations", icon: Store },
   { title: "Ekip", url: "/dashboard/team", icon: UserCog },
-  { title: "Denetim Kayıtları", url: "/dashboard/audit", icon: ScrollText },
   { title: "Ayarlar", url: "/dashboard/settings", icon: Settings },
 ];
 

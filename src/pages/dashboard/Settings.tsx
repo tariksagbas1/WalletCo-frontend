@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, Trash2, Upload } from "lucide-react";
-import { useRef } from "react";
+import { Loader2, Upload } from "lucide-react";
 
 export default function Settings() {
   const { merchant, refreshMerchant } = useAuth();
@@ -17,18 +16,6 @@ export default function Settings() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [demoCount, setDemoCount] = useState(0);
-  const [seeding, setSeeding] = useState(false);
-  const [clearing, setClearing] = useState(false);
-
-  const loadDemoCount = async (merchantId: string) => {
-    const { count } = await supabase
-      .from("customers")
-      .select("*", { count: "exact", head: true })
-      .eq("merchant_id", merchantId)
-      .eq("is_demo", true);
-    setDemoCount(count ?? 0);
-  };
 
   useEffect(() => {
     if (!merchant) return;
@@ -42,7 +29,6 @@ export default function Settings() {
         setName(data.name);
         setLegalName(data.legal_name ?? "");
       }
-      await loadDemoCount(merchant.id);
       setLoading(false);
     })();
   }, [merchant]);
@@ -101,54 +87,6 @@ export default function Settings() {
     refreshMerchant();
   };
 
-  const seedDemo = async () => {
-    if (!merchant) return;
-    setSeeding(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("seed-demo-data", {
-        body: { action: "seed", merchant_id: merchant.id },
-      });
-      if (error) throw error;
-      if ((data as any)?.error) throw new Error((data as any).error);
-      toast({
-        title: "Demo verisi yüklendi",
-        description: `${(data as any).customers} üye, ${(data as any).stamps} damga, ${(data as any).redemptions} ödül.`,
-      });
-      await loadDemoCount(merchant.id);
-    } catch (e: any) {
-      toast({
-        title: "Yüklenemedi",
-        description: e?.message ?? "Bilinmeyen hata",
-        variant: "destructive",
-      });
-    } finally {
-      setSeeding(false);
-    }
-  };
-
-  const clearDemo = async () => {
-    if (!merchant) return;
-    if (!confirm("Tüm demo verisi silinecek. Devam edilsin mi?")) return;
-    setClearing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("seed-demo-data", {
-        body: { action: "clear", merchant_id: merchant.id },
-      });
-      if (error) throw error;
-      if ((data as any)?.error) throw new Error((data as any).error);
-      toast({ title: "Demo verisi silindi", description: `${(data as any).cleared} kayıt temizlendi.` });
-      await loadDemoCount(merchant.id);
-    } catch (e: any) {
-      toast({
-        title: "Silinemedi",
-        description: e?.message ?? "Bilinmeyen hata",
-        variant: "destructive",
-      });
-    } finally {
-      setClearing(false);
-    }
-  };
-
   return (
     <div className="container max-w-3xl px-4 py-8 md:py-12">
       <div className="mb-8">
@@ -156,7 +94,7 @@ export default function Settings() {
         <p className="mt-1 text-muted-foreground">İşletme profili ve genel ayarlar.</p>
       </div>
 
-      <Card className="mb-6">
+      <Card>
         <CardHeader>
           <CardTitle>İşletme profili</CardTitle>
           <CardDescription>Müşterilere ve cüzdan kartlarında görünen bilgiler.</CardDescription>
@@ -213,37 +151,6 @@ export default function Settings() {
               </div>
             </>
           )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Demo verisi</CardTitle>
-          <CardDescription>
-            Sunum ve ekran görüntüleri için 50 sahte üye, 6 haftalık damga geçmişi ve birkaç ödül kullanımı yükle.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {demoCount > 0 && (
-            <div className="rounded-md border border-border bg-muted/40 p-3 text-sm">
-              Aktif demo üye sayısı: <span className="font-semibold">{demoCount}</span>
-            </div>
-          )}
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={seedDemo} disabled={seeding || clearing}>
-              {seeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-              Demo verisi yükle
-            </Button>
-            {demoCount > 0 && (
-              <Button variant="outline" onClick={clearDemo} disabled={clearing || seeding}>
-                {clearing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}
-                Demo verisini sil
-              </Button>
-            )}
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Önce yayında bir program oluşturmalısın. Demo üyeleri "is_demo" bayrağıyla işaretlenir, gerçek üyelerini etkilemez.
-          </p>
         </CardContent>
       </Card>
     </div>

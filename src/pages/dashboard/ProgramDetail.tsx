@@ -270,14 +270,6 @@ export default function ProgramDetail() {
                     <div className="text-muted-foreground">Ödül</div>
                     <div className="mt-1 truncate font-medium">{rule.reward_label ?? "—"}</div>
                   </div>
-                  <div>
-                    <div className="text-muted-foreground">Günlük max</div>
-                    <div className="mt-1 font-medium">{rule.max_stamps_per_day ?? "—"}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Bekleme</div>
-                    <div className="mt-1 font-medium">{rule.cooldown_minutes ?? 0} dk</div>
-                  </div>
                 </div>
                 {rule.reset_after_redeem && (
                   <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
