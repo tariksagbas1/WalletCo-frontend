@@ -116,7 +116,7 @@ const Index = () => {
               </Button>
             ) : (
               <>
-                <Button variant="ghost" className="hidden sm:inline-flex" asChild>
+                <Button variant="ghost" asChild>
                   <Link to="/auth">Giriş Yap</Link>
                 </Button>
                 <Button asChild>
@@ -138,9 +138,9 @@ const Index = () => {
                 İşletmenize özel dijital sadakat kartı
               </span>
               <h1 className="mt-6 text-4xl font-semibold leading-[1.08] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-                Müşterileriniz geri gelsin.{" "}
+                Sadakatli müşteriler için.{" "}
                 <span className="text-primary">
-                  Kartınız hep yanlarında olsun.
+                  Yeni nesil çözüm.
                 </span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">
