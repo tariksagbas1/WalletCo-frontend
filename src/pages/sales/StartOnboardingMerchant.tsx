@@ -166,8 +166,6 @@ export default function StartOnboardingMerchant() {
     threshold: 10,
     reward_label: "İkram Kahve",
     reset_after_redeem: true,
-    max_stamps_per_day: 3,
-    cooldown_minutes: 30,
     primary: "#3b2415",
     secondary: "#d6803a",
   });
@@ -287,8 +285,8 @@ export default function StartOnboardingMerchant() {
           threshold: program.threshold,
           reward_label: program.reward_label.trim(),
           reset_after_redeem: program.reset_after_redeem,
-          max_stamps_per_day: program.max_stamps_per_day,
-          cooldown_minutes: program.cooldown_minutes,
+          max_stamps_per_day: 1000,
+          cooldown_minutes: 0,
           primary_color: program.primary,
           secondary_color: program.secondary,
           special_program_id: specialProgramId === "none" ? null : specialProgramId,
@@ -433,19 +431,9 @@ export default function StartOnboardingMerchant() {
             <Label>Şartlar metni</Label>
             <Textarea value={program.terms_text} onChange={(e) => setProgram({ ...program, terms_text: e.target.value })} placeholder="Promosyon süresince geçerlidir. Nakit değeri yoktur." rows={2} />
           </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="space-y-1.5">
-              <Label>Damga eşiği *</Label>
-              <Input type="number" min={2} max={50} value={program.threshold} onChange={(e) => onManualThresholdChange(e.target.value)} />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Günlük max damga</Label>
-              <Input type="number" min={1} max={20} value={program.max_stamps_per_day} onChange={(e) => setProgram({ ...program, max_stamps_per_day: parseInt(e.target.value) || 1 })} />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Bekleme (dk)</Label>
-              <Input type="number" min={0} max={1440} value={program.cooldown_minutes} onChange={(e) => setProgram({ ...program, cooldown_minutes: parseInt(e.target.value) || 0 })} />
-            </div>
+          <div className="space-y-1.5 max-w-xs">
+            <Label>Damga eşiği *</Label>
+            <Input type="number" min={2} max={50} value={program.threshold} onChange={(e) => onManualThresholdChange(e.target.value)} />
           </div>
           <div className="space-y-1.5">
             <Label>Özel program (opsiyonel)</Label>
