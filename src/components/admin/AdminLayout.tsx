@@ -11,7 +11,7 @@ const items = [
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const { user, isPlatformAdmin, loading, signOut } = useAuth();
+  const { user, isPlatformAdmin, isPlatform, loading, signOut } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     );
   }
   if (!user) return <Navigate to="/auth" state={{ from: location }} replace />;
-  if (!isPlatformAdmin) return <Navigate to="/dashboard" replace />;
+  if (!isPlatformAdmin) return <Navigate to={isPlatform ? "/platform" : "/dashboard"} replace />;
 
   return (
     <div className="flex min-h-screen w-full bg-background">

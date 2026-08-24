@@ -1,5 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ArrowDownRight, ArrowUpRight, LucideIcon } from "lucide-react";
+
+export type KpiBreakdownRow = {
+  name: string;
+  count: number;
+};
 
 interface KpiCardProps {
   label: string;
@@ -7,11 +13,23 @@ interface KpiCardProps {
   icon: LucideIcon;
   delta?: { value: number; positive: boolean };
   hint?: string;
+  breakdown?: KpiBreakdownRow[];
+  breakdownTitle?: string;
 }
 
-export function KpiCard({ label, value, icon: Icon, delta, hint }: KpiCardProps) {
-  return (
-    <Card className="shadow-[var(--shadow-card)]">
+export function KpiCard({
+  label,
+  value,
+  icon: Icon,
+  delta,
+  hint,
+  breakdown,
+  breakdownTitle,
+}: KpiCardProps) {
+  const card = (
+    <Card
+      className={`shadow-[var(--shadow-card)] ${breakdown ? "transition-colors hover:border-primary/30" : ""}`}
+    >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">{label}</CardTitle>
         <Icon className="h-4 w-4 text-primary" />
@@ -39,5 +57,34 @@ export function KpiCard({ label, value, icon: Icon, delta, hint }: KpiCardProps)
         </div>
       </CardContent>
     </Card>
+  );
+
+  if (!breakdown) return card;
+
+  return (
+    <HoverCard openDelay={120} closeDelay={80}>
+      <HoverCardTrigger asChild>
+        <div className="cursor-default">{card}</div>
+      </HoverCardTrigger>
+      <HoverCardContent align="start" className="w-72 p-3">
+        <div className="mb-2 text-xs font-medium text-muted-foreground">
+          {breakdownTitle ?? "İşletme katkısı"}
+        </div>
+        {breakdown.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Bu dönemde katkı yok.</p>
+        ) : (
+          <ul className="max-h-64 space-y-1.5 overflow-auto">
+            {breakdown.map((row) => (
+              <li key={row.name} className="flex items-baseline justify-between gap-3 text-sm">
+                <span className="min-w-0 truncate font-medium">{row.name}</span>
+                <span className="shrink-0 tabular-nums text-muted-foreground">
+                  {row.count.toLocaleString("tr-TR")}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </HoverCardContent>
+    </HoverCard>
   );
 }

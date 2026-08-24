@@ -38,17 +38,18 @@ export default function Auth() {
     if (!user) return;
     let cancelled = false;
     (async () => {
-      // Sales users (platform_roles.role === "sales") land on the sales console,
-      // unless an explicit ?next= target was provided.
       if (!params.get("next")) {
-        const { data: salesRow } = await (supabase as any)
+        const { data: roleRows } = await (supabase as any)
           .from("platform_roles")
           .select("role")
-          .eq("user_id", user.id)
-          .eq("role", "sales")
-          .maybeSingle();
+          .eq("user_id", user.id);
         if (cancelled) return;
-        if (salesRow) {
+        const roles = ((roleRows ?? []) as { role: string }[]).map((r) => r.role);
+        if (roles.includes("platform")) {
+          navigate("/platform", { replace: true });
+          return;
+        }
+        if (roles.includes("sales")) {
           navigate("/sales", { replace: true });
           return;
         }

@@ -38,6 +38,9 @@ import SalesLayout from "./pages/sales/SalesLayout";
 import Sales from "./pages/sales/Sales";
 import StartOnboardingMerchant from "./pages/sales/StartOnboardingMerchant";
 import QrPosterDesigner from "./pages/sales/QrPosterDesigner";
+import PlatformLayout from "./pages/platform/PlatformLayout";
+import PlatformDashboard from "./pages/platform/PlatformDashboard";
+import PlatformMerchants from "./pages/platform/PlatformMerchants";
 import Unsubscribe from "./pages/Unsubscribe";
 import UserAgreement from "./pages/UserAgreement";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -87,6 +90,8 @@ const App = () => (
             <Route path="/sales" element={<SalesLayout><Sales /></SalesLayout>} />
             <Route path="/sales/onboarding/new" element={<SalesLayout><StartOnboardingMerchant /></SalesLayout>} />
             <Route path="/sales/poster" element={<SalesLayout><QrPosterDesigner /></SalesLayout>} />
+            <Route path="/platform" element={<PlatformLayout><PlatformDashboard /></PlatformLayout>} />
+            <Route path="/platform/merchants" element={<PlatformLayout><PlatformMerchants /></PlatformLayout>} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="/user-agreement" element={<UserAgreement />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

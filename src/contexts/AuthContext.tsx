@@ -22,6 +22,7 @@ interface AuthContextValue {
   isStaffLike: boolean; // staff/manager → belongs in staff console
   isPlatformAdmin: boolean;
   isSales: boolean; // platform_roles.role === "sales" → sales console
+  isPlatform: boolean; // platform_roles.role === "platform" → platform observer
   loading: boolean;
   refreshMerchant: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -39,6 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [roles, setRoles] = useState<AppRole[]>([]);
   const [isPlatformAdmin, setIsPlatformAdmin] = useState(false);
   const [isSales, setIsSales] = useState(false);
+  const [isPlatform, setIsPlatform] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadMerchantAndRoles = async (userId: string) => {
@@ -67,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const platformRoles = (data ?? []).map((r: any) => r.role as string);
     setIsPlatformAdmin(platformRoles.includes("admin"));
     setIsSales(platformRoles.includes("sales"));
+    setIsPlatform(platformRoles.includes("platform"));
   };
 
   useEffect(() => {
@@ -83,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setRoles([]);
         setIsPlatformAdmin(false);
         setIsSales(false);
+        setIsPlatform(false);
       }
     });
 
@@ -100,6 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setRoles([]);
         setIsPlatformAdmin(false);
         setIsSales(false);
+        setIsPlatform(false);
         setLoading(false);
         return;
       }
@@ -122,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRoles([]);
     setIsPlatformAdmin(false);
     setIsSales(false);
+    setIsPlatform(false);
   };
 
   const value = useMemo<AuthContextValue>(() => {
@@ -136,9 +142,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session, user, merchant, roles, primaryRole,
       isOwnerLike: roles.some((r) => OWNER_LIKE.includes(r)),
       isStaffLike: roles.some((r) => STAFF_LIKE.includes(r)) && !roles.some((r) => OWNER_LIKE.includes(r)),
-      isPlatformAdmin, isSales, loading, refreshMerchant, signOut,
+      isPlatformAdmin, isSales, isPlatform, loading, refreshMerchant, signOut,
     };
-  }, [session, user, merchant, roles, isPlatformAdmin, isSales, loading]);
+  }, [session, user, merchant, roles, isPlatformAdmin, isSales, isPlatform, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
