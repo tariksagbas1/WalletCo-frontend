@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Loader2, Search as SearchIcon, User } from "lucide-react";
+import { maskPhone, staffCustomerName } from "@/lib/maskCustomer";
 
 interface Hit {
   pass_id: string;
@@ -35,8 +36,8 @@ export default function StaffSearch() {
       .filter((p: any) => (p.customers?.phone ?? "").includes(term))
       .map((p: any) => ({
         pass_id: p.id,
-        customer_name: `${p.customers?.first_name ?? ""} ${p.customers?.last_name ?? ""}`.trim(),
-        phone: p.customers?.phone ?? null,
+        customer_name: staffCustomerName(p.customers?.first_name, p.customers?.last_name),
+        phone: maskPhone(p.customers?.phone),
         program_name: p.programs?.name ?? "—",
       }));
     setHits(filtered);

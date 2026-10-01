@@ -7,6 +7,7 @@ import { Loader2, Plus, Gift, Undo2, ArrowLeft, Check } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useActiveLocation } from "./StaffLayout";
 import { enqueueAction } from "@/lib/offlineQueue";
+import { maskPhone, staffCustomerName } from "@/lib/maskCustomer";
 
 interface PassData {
   id: string;
@@ -165,9 +166,9 @@ export default function CustomerCard() {
       <Card className="p-5">
         <div className="text-xs uppercase tracking-wide text-muted-foreground">Üye</div>
         <div className="mt-1 text-xl font-bold">
-          {data.customer.first_name} {data.customer.last_name ?? ""}
+          {staffCustomerName(data.customer.first_name, data.customer.last_name)}
         </div>
-        <div className="text-sm text-muted-foreground">{data.customer.phone ?? ""}</div>
+        <div className="text-sm text-muted-foreground">{maskPhone(data.customer.phone)}</div>
         <div className="mt-3 text-sm">{data.program.name}</div>
       </Card>
 
